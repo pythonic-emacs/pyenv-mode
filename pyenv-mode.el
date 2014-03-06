@@ -1,4 +1,4 @@
-;;; pyenv-mode.el --- Integrate pyenv with python-mode
+;;; pyenv-mode.el --- Integrate pyenv-virtualenv with python-mode
 
 ;; Copyright (C) 2014 by Malyshev Artem
 
@@ -22,6 +22,34 @@
 ;;; Commentary:
 
 ;;; Code:
+
+(require 'python)
+
+(defun pyenv-mode-root ()
+  "Find pyenv installation path."
+  (replace-regexp-in-string "\n" "" (shell-command-to-string "pyenv root")))
+
+(defun pyenv-mode-virtualenvs ()
+  "List virtual environments created with pyenv."
+  (let ((virtualenvs (shell-command-to-string "pyenv virtualenvs --bare")))
+    (split-string virtualenvs)))
+
+(defun pyenv-mode-read-version ()
+  "Read virtual environment from user input."
+  (concat (pyenv-mode-root) "/versions/"
+          (completing-read "Pyenv: " (pyenv-mode-virtualenvs))))
+
+;;;###autoload
+(defun pyenv-mode-activate ()
+  "Set `python-shell-virtualenv-path' to some pyenv virtualenv."
+  (interactive)
+  (setq python-shell-virtualenv-path (pyenv-mode-read-version)))
+
+;;;###autoload
+(defun pyenv-mode-deactivate ()
+  "Unset `python-shell-virtualenv-path'."
+  (interactive)
+  (setq python-shell-virtualenv-path nil))
 
 (provide 'pyenv-mode)
 
