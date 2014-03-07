@@ -21,6 +21,23 @@
 
 ;;; Commentary:
 
+;; Add following block to your Emacs configuration
+;;
+;;     (add-hook 'python-mode-hook 'pyenv-mode)
+;;
+;; Now you are available to specify pyenv virtualenv environment
+;;
+;;     M-x pyenv-mode-activate
+;;
+;; So now when you run inferior python with
+;;
+;;     M-x run-python
+;;
+;; process will start inside specified environment.  You can unset
+;; current environment with
+;;
+;;     M-x pyenv-mode-deactivate
+
 ;;; Code:
 
 (require 'python)
