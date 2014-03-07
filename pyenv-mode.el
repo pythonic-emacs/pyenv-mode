@@ -68,6 +68,21 @@
   (interactive)
   (setq python-shell-virtualenv-path nil))
 
+(defvar pyenv-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-a") 'pyenv-mode-activate)
+    (define-key map (kbd "C-c C-d") 'pyenv-mode-deactivate)
+    map)
+  "Keymap for pyenv-mode.")
+
+;;;###autoload
+(define-minor-mode pyenv-mode
+  "Minor mode for pyenv interaction.
+
+\\{pyenv-mode-map}"
+  :lighter " Pyenv"
+  :keymap pyenv-mode-map)
+
 (provide 'pyenv-mode)
 
 ;;; pyenv-mode.el ends here
