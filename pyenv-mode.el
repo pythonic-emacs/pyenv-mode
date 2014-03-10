@@ -4,7 +4,7 @@
 
 ;; Author: Malyshev Artem <proofit404@gmail.com>
 ;; URL: https://github.com/proofit404/pyenv-mode
-;; Version: 0.0.1
+;; Version: 0.0.2
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -42,6 +42,16 @@
 
 (require 'python)
 
+(defgroup pyenv-mode nil
+  "Pyenv virtualenv integration with python mode."
+  :group 'languages)
+
+(defcustom pyenv-mode-mode-line-format
+  '(python-shell-virtualenv-path
+    (:eval (concat "Pyenv:" (file-name-base python-shell-virtualenv-path) " ")))
+  "How `pyenv-mode' will indicate the current environment in the mode line."
+  :group 'pyenv-mode)
+
 (defun pyenv-mode-root ()
   "Find pyenv installation path."
   (replace-regexp-in-string "\n" "" (shell-command-to-string "pyenv root")))
@@ -60,13 +70,15 @@
 (defun pyenv-mode-activate ()
   "Set `python-shell-virtualenv-path' to some pyenv virtualenv."
   (interactive)
-  (setq python-shell-virtualenv-path (pyenv-mode-read-version)))
+  (setq python-shell-virtualenv-path (pyenv-mode-read-version))
+  (force-mode-line-update))
 
 ;;;###autoload
 (defun pyenv-mode-deactivate ()
   "Unset `python-shell-virtualenv-path'."
   (interactive)
-  (setq python-shell-virtualenv-path nil))
+  (setq python-shell-virtualenv-path nil)
+  (force-mode-line-update))
 
 (defvar pyenv-mode-map
   (let ((map (make-sparse-keymap)))
@@ -80,8 +92,12 @@
   "Minor mode for pyenv interaction.
 
 \\{pyenv-mode-map}"
-  :lighter " Pyenv"
-  :keymap pyenv-mode-map)
+  :lighter ""
+  :keymap pyenv-mode-map
+  (if pyenv-mode
+      (add-to-list 'mode-line-misc-info pyenv-mode-mode-line-format)
+    (setq mode-line-misc-info
+          (delete pyenv-mode-mode-line-format mode-line-misc-info))))
 
 (provide 'pyenv-mode)
 
