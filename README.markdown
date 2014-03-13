@@ -14,8 +14,8 @@ out-of-the-box.
 
 * Override your `exec-path`
 * Change emacs `process-environment`
-* Support virtualenv wrapper
 * Manage your pyenv installation
+* Deal with virtualenvwrapper
 
 ## Installation
 
@@ -28,7 +28,7 @@ You can simply install package from [Melpa][4]
 Add following block to your emacs configuration
 
 ```lisp
-(add-hook 'python-mode-hook 'pyenv-mode)
+(pyenv-mode)
 ```
 
 Now you are available to specify pyenv virtualenv environment

@@ -23,7 +23,7 @@
 
 ;; Add following block to your Emacs configuration
 ;;
-;;     (add-hook 'python-mode-hook 'pyenv-mode)
+;;     (pyenv-mode)
 ;;
 ;; Now you are available to specify pyenv virtualenv environment
 ;;
@@ -92,6 +92,7 @@
   "Minor mode for pyenv interaction.
 
 \\{pyenv-mode-map}"
+  :global t
   :lighter ""
   :keymap pyenv-mode-map
   (if pyenv-mode
