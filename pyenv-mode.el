@@ -1,10 +1,10 @@
-;;; pyenv-mode.el --- Integrate pyenv-virtualenv with python-mode
+;;; pyenv-mode.el --- Integrate pyenv with python-mode
 
 ;; Copyright (C) 2014 by Malyshev Artem
 
 ;; Author: Malyshev Artem <proofit404@gmail.com>
 ;; URL: https://github.com/proofit404/pyenv-mode
-;; Version: 0.0.2
+;; Version: 0.0.3
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -25,18 +25,18 @@
 ;;
 ;;     (pyenv-mode)
 ;;
-;; Now you are available to specify pyenv virtualenv environment
+;; Now you are available to specify pyenv python installation
 ;;
-;;     M-x pyenv-mode-activate
+;;     M-x pyenv-mode-set-version
 ;;
 ;; So now when you run inferior python with
 ;;
 ;;     M-x run-python
 ;;
-;; process will start inside specified environment.  You can unset
-;; current environment with
+;; process will start inside specified python installation.  You can
+;; unset current version with
 ;;
-;;     M-x pyenv-mode-deactivate
+;;     M-x pyenv-mode-unset-version
 
 ;;; Code:
 
@@ -48,42 +48,48 @@
 
 (defcustom pyenv-mode-mode-line-format
   '(python-shell-virtualenv-path
-    (:eval (concat "Pyenv:" (file-name-base python-shell-virtualenv-path) " ")))
-  "How `pyenv-mode' will indicate the current environment in the mode line."
+    (:eval (concat "Pyenv:" (getenv "PYENV_VERSION") " ")))
+  "How `pyenv-mode' will indicate the current python version in the mode line."
   :group 'pyenv-mode)
 
 (defun pyenv-mode-root ()
-  "Find pyenv installation path."
+  "Pyenv installation path."
   (replace-regexp-in-string "\n" "" (shell-command-to-string "pyenv root")))
 
-(defun pyenv-mode-virtualenvs ()
-  "List virtual environments created with pyenv."
-  (let ((virtualenvs (shell-command-to-string "pyenv virtualenvs --bare")))
-    (split-string virtualenvs)))
+(defun pyenv-mode-full-path (version)
+  "Return full path for VERSION."
+  (concat (pyenv-mode-root) "/versions/" version))
+
+(defun pyenv-mode-versions ()
+  "List installed python versions."
+  (let ((versions (shell-command-to-string "pyenv versions --bare")))
+    (split-string versions)))
 
 (defun pyenv-mode-read-version ()
   "Read virtual environment from user input."
-  (concat (pyenv-mode-root) "/versions/"
-          (completing-read "Pyenv: " (pyenv-mode-virtualenvs))))
+  (completing-read "Pyenv: " (pyenv-mode-versions)))
 
 ;;;###autoload
-(defun pyenv-mode-activate ()
-  "Set `python-shell-virtualenv-path' to some pyenv virtualenv."
+(defun pyenv-mode-set-version ()
+  "Set python shell version."
   (interactive)
-  (setq python-shell-virtualenv-path (pyenv-mode-read-version))
-  (force-mode-line-update))
+  (let ((version (pyenv-mode-read-version)))
+    (setq python-shell-virtualenv-path (pyenv-mode-full-path version))
+    (setenv "PYENV_VERSION" version)
+    (force-mode-line-update)))
 
 ;;;###autoload
-(defun pyenv-mode-deactivate ()
-  "Unset `python-shell-virtualenv-path'."
+(defun pyenv-mode-unset-version ()
+  "Unset python shell version."
   (interactive)
   (setq python-shell-virtualenv-path nil)
+  (setenv "PYENV_VERSION")
   (force-mode-line-update))
 
 (defvar pyenv-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c C-a") 'pyenv-mode-activate)
-    (define-key map (kbd "C-c C-d") 'pyenv-mode-deactivate)
+    (define-key map (kbd "C-c C-s") 'pyenv-mode-set-version)
+    (define-key map (kbd "C-c C-u") 'pyenv-mode-unset-version)
     map)
   "Keymap for pyenv-mode.")
 
