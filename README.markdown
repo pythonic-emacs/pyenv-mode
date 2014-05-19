@@ -1,7 +1,7 @@
 # Pyenv mode
 
 Integrate Fabián E. Gallina [python.el][1] with [pyenv][2] tool.  This
-allow packages witch already use python.el (like
+allow packages which already use python.el (like
 [python-django.el][3]) got pyenv virtual environments support
 out-of-the-box.  Also comint shell, compile commands and pdb debugger
 will use proper python version.
