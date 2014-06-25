@@ -27,7 +27,7 @@
 ;;
 ;; Now you are available to specify pyenv python installation
 ;;
-;;     M-x pyenv-mode-set-version
+;;     M-x pyenv-mode-set
 ;;
 ;; So now when you run inferior python with
 ;;
@@ -36,7 +36,7 @@
 ;; process will start inside specified python installation.  You can
 ;; unset current version with
 ;;
-;;     M-x pyenv-mode-unset-version
+;;     M-x pyenv-mode-unset
 
 ;;; Code:
 
@@ -70,16 +70,15 @@
   (completing-read "Pyenv: " (pyenv-mode-versions)))
 
 ;;;###autoload
-(defun pyenv-mode-set-version ()
-  "Set python shell version."
-  (interactive)
-  (let ((version (pyenv-mode-read-version)))
-    (setq python-shell-virtualenv-path (pyenv-mode-full-path version))
-    (setenv "PYENV_VERSION" version)
-    (force-mode-line-update)))
+(defun pyenv-mode-set (version)
+  "Set python shell VERSION."
+  (interactive (list (pyenv-mode-read-version)))
+  (setq python-shell-virtualenv-path (pyenv-mode-full-path version))
+  (setenv "PYENV_VERSION" version)
+  (force-mode-line-update))
 
 ;;;###autoload
-(defun pyenv-mode-unset-version ()
+(defun pyenv-mode-unset ()
   "Unset python shell version."
   (interactive)
   (setq python-shell-virtualenv-path nil)
@@ -88,8 +87,8 @@
 
 (defvar pyenv-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c C-s") 'pyenv-mode-set-version)
-    (define-key map (kbd "C-c C-u") 'pyenv-mode-unset-version)
+    (define-key map (kbd "C-c C-s") 'pyenv-mode-set)
+    (define-key map (kbd "C-c C-u") 'pyenv-mode-unset)
     map)
   "Keymap for pyenv-mode.")
 

@@ -37,7 +37,7 @@ Add following block to your emacs configuration
 
 Now you are available to specify pyenv python version::
 
-    M-x pyenv-mode-set-version
+    M-x pyenv-mode-set
 
 So now when you run inferior python with::
 
@@ -46,7 +46,7 @@ So now when you run inferior python with::
 process will start inside specified python installation.  You can
 unset current version with::
 
-    M-x pyenv-mode-unset-version
+    M-x pyenv-mode-unset
 
 Goodies
 -------
@@ -54,6 +54,7 @@ Goodies
 * compile commands use proper python version and environment
 * flycheck_ doesn't show syntax error in python2 buffers if you use python3 by default
 * anaconda-mode_ make completions, definitions and references search in chosen environment automatically
+* you can use set function in projectile_ open project hook to setup working environment
 
 .. _python.el: http://repo.or.cz/w/emacs.git/blob_plain/master:/lisp/progmodes/python.el
 .. _pyenv: https://github.com/yyuu/pyenv
@@ -61,3 +62,4 @@ Goodies
 .. _Melpa: http://melpa.milkbox.net
 .. _flycheck: https://github.com/flycheck/flycheck
 .. _anaconda-mode: https://github.com/proofit404/anaconda-mode
+.. _projectile: https://github.com/bbatsov/projectile
