@@ -47,10 +47,15 @@
   :group 'languages)
 
 (defcustom pyenv-mode-mode-line-format
-  '(python-shell-virtualenv-path
-    (:eval (concat "Pyenv:" (getenv "PYENV_VERSION") " ")))
+  '(:eval
+    (when (pyenv-mode-version)
+      (concat "Pyenv:" (pyenv-mode-version) " ")))
   "How `pyenv-mode' will indicate the current python version in the mode line."
   :group 'pyenv-mode)
+
+(defun pyenv-mode-version ()
+  "Return currently active pyenv version."
+  (getenv "PYENV_VERSION"))
 
 (defun pyenv-mode-root ()
   "Pyenv installation path."
@@ -58,12 +63,13 @@
 
 (defun pyenv-mode-full-path (version)
   "Return full path for VERSION."
-  (concat (pyenv-mode-root) "/versions/" version))
+  (unless (string= version "system")
+    (concat (pyenv-mode-root) "/versions/" version)))
 
 (defun pyenv-mode-versions ()
   "List installed python versions."
   (let ((versions (shell-command-to-string "pyenv versions --bare")))
-    (split-string versions)))
+    (cons "system" (split-string versions))))
 
 (defun pyenv-mode-read-version ()
   "Read virtual environment from user input."
