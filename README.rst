@@ -51,10 +51,29 @@ unset current version with::
 Goodies
 -------
 
+When you set python version with ``pyenv-mode`` following changes
+happens automatically
+
 * compile commands use proper python version and environment
-* flycheck_ doesn't show syntax error in python2 buffers if you use python3 by default
-* anaconda-mode_ make completions, definitions and references search in chosen environment automatically
-* you can use set function in projectile_ open project hook to setup working environment
+* flycheck_ perform syntax checking according to python version you use
+* anaconda-mode_ search completions, definitions and references in chosen environment
+
+Projectile integration
+``````````````````````
+
+You can switch python version together with current project.  Drop
+following lines into emacs init file.  When use projectile switch
+project with ``C-c p p`` key binding ``pyenv-mode`` will activate
+environment matched project name.
+
+.. code:: lisp
+
+    (defun projectile-pyenv-mode-set ()
+      "Set pyenv version matching project name.
+    Version must be already installed."
+      (pyenv-mode-set (projectile-project-name)))
+
+    (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
 
 .. _python.el: http://repo.or.cz/w/emacs.git/blob_plain/master:/lisp/progmodes/python.el
 .. _pyenv: https://github.com/yyuu/pyenv
