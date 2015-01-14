@@ -1,5 +1,12 @@
+.. |melpa| image:: http://melpa.org/packages/pyenv-mode-badge.svg
+    :target: http://melpa.org/#/pyenv-mode
+    :alt: Melpa
+
+==========
 Pyenv mode
 ==========
+
+|melpa|
 
 Integrate Fabián E. Gallina `python.el`_ with pyenv_ tool.  This allow
 packages which already use python.el (like python-django_) got pyenv
