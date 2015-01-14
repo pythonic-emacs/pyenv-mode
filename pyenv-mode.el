@@ -40,7 +40,8 @@
 
 (defun pyenv-mode-version ()
   "Return currently active pyenv version."
-  (getenv "PYENV_VERSION"))
+  (replace-regexp-in-string
+   "\n" ""(getenv "PYENV_VERSION")))
 
 (defun pyenv-mode-root ()
   "Pyenv installation path."
