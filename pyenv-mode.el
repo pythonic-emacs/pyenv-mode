@@ -1,8 +1,8 @@
 ;;; pyenv-mode.el --- Integrate pyenv with python-mode
 
-;; Copyright (C) 2014-2015 by Malyshev Artem
+;; Copyright (C) 2014-2015 by Artem Malyshev
 
-;; Author: Malyshev Artem <proofit404@gmail.com>
+;; Author: Artem Malyshev <proofit404@gmail.com>
 ;; URL: https://github.com/proofit404/pyenv-mode
 ;; Version: 0.0.3
 
