@@ -4,7 +4,8 @@
 
 ;; Author: Artem Malyshev <proofit404@gmail.com>
 ;; URL: https://github.com/proofit404/pyenv-mode
-;; Version: 0.0.3
+;; Version: 0.1.0
+;; Package-Requires: ((pythonic "0.1.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -25,7 +26,7 @@
 
 ;;; Code:
 
-(require 'python)
+(require 'pythonic)
 
 (defgroup pyenv-mode nil
   "Pyenv virtualenv integration with python mode."
@@ -64,7 +65,7 @@
 (defun pyenv-mode-set (version)
   "Set python shell VERSION."
   (interactive (list (pyenv-mode-read-version)))
-  (setq python-shell-virtualenv-path (pyenv-mode-full-path version))
+  (pythonic-activate (pyenv-mode-full-path version))
   (setenv "PYENV_VERSION" version)
   (force-mode-line-update))
 
@@ -72,7 +73,7 @@
 (defun pyenv-mode-unset ()
   "Unset python shell version."
   (interactive)
-  (setq python-shell-virtualenv-path nil)
+  (pythonic-deactivate)
   (setenv "PYENV_VERSION")
   (force-mode-line-update))
 
