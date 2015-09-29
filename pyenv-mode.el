@@ -54,8 +54,9 @@
 
 (defun pyenv-mode-versions ()
   "List installed python versions."
-  (let ((versions (shell-command-to-string "pyenv versions --bare")))
-    (cons "system" (split-string versions))))
+  (let ((versions (concat (shell-command-to-string "pyenv versions --bare")
+                          (shell-command-to-string "pyenv virtualenvs --bare"))))
+    (delete-dups (cons "system" (split-string versions)))))
 
 (defun pyenv-mode-read-version ()
   "Read virtual environment from user input."
