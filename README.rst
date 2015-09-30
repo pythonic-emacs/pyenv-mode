@@ -1,5 +1,5 @@
-.. |melpa| image:: http://melpa.org/packages/pyenv-mode-badge.svg
-    :target: http://melpa.org/#/pyenv-mode
+.. |melpa| image:: https://melpa.org/packages/pyenv-mode-badge.svg
+    :target: https://melpa.org/#/pyenv-mode
     :alt: Melpa
 
 ==========
@@ -85,7 +85,7 @@ environment matched project name.
 .. _python.el: http://repo.or.cz/w/emacs.git/blob_plain/master:/lisp/progmodes/python.el
 .. _pyenv: https://github.com/yyuu/pyenv
 .. _python-django: https://github.com/fgallina/python-django.el
-.. _Melpa: http://melpa.milkbox.net
+.. _Melpa: https://melpa.org
 .. _flycheck: https://github.com/flycheck/flycheck
 .. _anaconda-mode: https://github.com/proofit404/anaconda-mode
 .. _projectile: https://github.com/bbatsov/projectile
