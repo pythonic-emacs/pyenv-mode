@@ -75,10 +75,13 @@ environment matched project name.
 
 .. code:: lisp
 
+    (require 'pyenv-mode)
+
     (defun projectile-pyenv-mode-set ()
-      "Set pyenv version matching project name.
-    Version must be already installed."
-      (pyenv-mode-set (projectile-project-name)))
+      "Set pyenv version matching project name."
+      (let ((project (projectile-project-name)))
+        (when (member project (pyenv-mode-versions))
+          (pyenv-mode-set project))))
 
     (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
 
