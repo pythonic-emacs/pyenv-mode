@@ -80,8 +80,9 @@ environment matched project name.
     (defun projectile-pyenv-mode-set ()
       "Set pyenv version matching project name."
       (let ((project (projectile-project-name)))
-        (when (member project (pyenv-mode-versions))
-          (pyenv-mode-set project))))
+        (if (member project (pyenv-mode-versions))
+            (pyenv-mode-set project)
+          (pyenv-mode-unset))))
 
     (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
 
