@@ -57,6 +57,11 @@
   (let ((versions (shell-command-to-string "pyenv versions --bare")))
     (cons "system" (split-string versions))))
 
+(defun pyenv-mode-global-version ()
+  "Return global python version."
+  (replace-regexp-in-string "\n$" ""
+                            (shell-command-to-string "pyenv global")))
+
 (defun pyenv-mode-read-version ()
   "Read virtual environment from user input."
   (completing-read "Pyenv: " (pyenv-mode-versions)))
