@@ -28,7 +28,7 @@
 
 (require 'pythonic)
 
-(defgroup pyenv-mode nil
+(defgroup pyenv nil
   "Pyenv virtualenv integration with python mode."
   :group 'languages)
 
@@ -37,7 +37,7 @@
     (when (pyenv-mode-version)
       (concat "Pyenv:" (pyenv-mode-version) " ")))
   "How `pyenv-mode' will indicate the current python version in the mode line."
-  :group 'pyenv-mode)
+  :group 'pyenv)
 
 (defun pyenv-mode-version ()
   "Return currently active pyenv version."
