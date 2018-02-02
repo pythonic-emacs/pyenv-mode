@@ -84,7 +84,7 @@ environment matched project name.
             (pyenv-mode-set project)
           (pyenv-mode-unset))))
 
-    (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set)
+    (add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
 
 .. _python.el: http://repo.or.cz/w/emacs.git/blob_plain/master:/lisp/progmodes/python.el
 .. _pyenv: https://github.com/yyuu/pyenv
