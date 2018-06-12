@@ -4,8 +4,8 @@
 
 ;; Author: Artem Malyshev <proofit404@gmail.com>
 ;; URL: https://github.com/proofit404/pyenv-mode
-;; Version: 0.1.0
-;; Package-Requires: ((pythonic "0.1.0"))
+;; Version: 0.2.0
+;; Package-Requires: ((pythonic "0.1.0") (f "0.14"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 
 ;;; Code:
 
+(require 'f)
 (require 'pythonic)
 
 (defgroup pyenv nil
@@ -61,6 +62,43 @@
   "Read virtual environment from user input."
   (completing-read "Pyenv: " (pyenv-mode-versions)))
 
+(defun pyenv-python-version-file-exists-p (dir)
+  "Return t if a .python-version file found under DIR."
+  (f-exists? (f-expand ".python-version" dir)))
+
+(defun pyenv-detect-project-python-version ()
+  "Returns the Python version found for a project.
+
+Looks at `projectile-project-root' first, if a .python-version
+file is found, returns its content.
+
+Otherwise, `projectile-project-name' if it is an installed Python
+version.
+
+nil if none of the above is true.
+"
+  (let* ((project-root (ignore-errors (projectile-project-root)))
+         (version-file (and project-root
+                            (f-join project-root ".python-version")))
+         (version-file-version (and project-root
+                                    (f-exists? version-file)
+                                    (f-readable? version-file)
+                                    (string-trim
+                                     (f-read-text version-file 'utf-8))))
+         (project-name (projectile-project-name)))
+    (cond ((member version-file-version (pyenv-mode-versions))
+           version-file-version)
+          ((member project-name (pyenv-mode-versions))
+           project-name)
+          (t nil))))
+
+(defun pyenv-set-project-python-version ()
+  "Set Python version when opening a project."
+  (let ((python-version (pyenv-detect-project-python-version)))
+    (if python-version
+        (pyenv-mode-set python-version)
+      (pyenv-mode-unset))))
+
 ;;;###autoload
 (defun pyenv-mode-set (version)
   "Set python shell VERSION."
@@ -85,17 +123,33 @@
   "Keymap for pyenv-mode.")
 
 ;;;###autoload
-(define-minor-mode pyenv-mode
+(define-minor-mode pyenv-local-mode
   "Minor mode for pyenv interaction.
 
 \\{pyenv-mode-map}"
-  :global t
   :lighter ""
   :keymap pyenv-mode-map
-  (if pyenv-mode
+  :group 'pyenv
+  (if pyenv-local-mode
       (add-to-list 'mode-line-misc-info pyenv-mode-mode-line-format)
     (setq mode-line-misc-info
           (delete pyenv-mode-mode-line-format mode-line-misc-info))))
+
+(defun pyenv-local-mode-turn-on ()
+  "Turn on `pyenv-local-mode' if the buffer's major mode is`python-mode'."
+  (when (derived-mode-p 'python-mode)
+    (pyenv-local-mode)))
+
+;;;###autoload
+(define-globalized-minor-mode pyenv-mode pyenv-local-mode
+  pyenv-local-mode-turn-on
+  :group 'pyenv
+  :after-hook
+  (if pyenv-mode
+      (with-eval-after-load 'projectile
+        (add-hook 'projectile-after-switch-project-hook #'pyenv-set-project-python-version))
+    (with-eval-after-load 'projectile
+      (remove-hook 'projectile-after-switch-project-hook #'pyenv-set-project-python-version))))
 
 (provide 'pyenv-mode)
 
