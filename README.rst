@@ -1,10 +1,3 @@
-===================
- MAINTAINER WANTED
-===================
-
-* https://twitter.com/proofit404/status/1171919301789593601
-* https://www.reddit.com/r/emacs/comments/d34qk7/im_looking_for_maintainers_for_anacondamode/
-
 .. |melpa| image:: https://melpa.org/packages/pyenv-mode-badge.svg
     :target: https://melpa.org/#/pyenv-mode
     :alt: Melpa
