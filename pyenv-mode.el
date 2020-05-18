@@ -93,7 +93,9 @@
   :lighter ""
   :keymap pyenv-mode-map
   (if pyenv-mode
-      (add-to-list 'mode-line-misc-info pyenv-mode-mode-line-format)
+      (if (executable-find "pyenv")
+          (add-to-list 'mode-line-misc-info pyenv-mode-mode-line-format)
+        (error "pyenv-mode: pyenv executable not found."))
     (setq mode-line-misc-info
           (delete pyenv-mode-mode-line-format mode-line-misc-info))))
 
