@@ -8,14 +8,14 @@ Pyenv mode
 
 |melpa|
 
-Integrate Fabián E. Gallina `python.el`_ with pyenv_ tool.  This allow
-packages which already use python.el (like python-django_) got pyenv
-virtual environments support out-of-the-box.
+Pyenv mode integrates Fabián E. Gallina's `python.el`_ with the pyenv_ tool.
+This gives packages which already use python.el (like python-django_)
+pyenv virtual environment support out-of-the-box.
 
 Pyenv mode does...
 ~~~~~~~~~~~~~~~~~~
 
-* Setup ``PYENV_VERSION`` environment variable and
+* Setup the ``PYENV_VERSION`` environment variable and
   ``python-shell-virtualenv-path`` custom variable based on user input
 
 Pyenv mode doesn't...
@@ -29,49 +29,49 @@ Pyenv mode doesn't...
 Installation
 ------------
 
-You can simply install package from Melpa_::
+You can simply install the package from Melpa_::
 
     M-x package-install RET pyenv-mode
 
 Usage
 -----
 
-Add following block to your emacs configuration
+Add following block to your Emacs configuration:
 
 .. code:: lisp
 
     (pyenv-mode)
 
-Now you are available to specify pyenv python version::
+Now you can specify the pyenv Python version::
 
     M-x pyenv-mode-set
 
-So now when you run inferior python with::
+So now when you run inferior Python with::
 
     M-x run-python
 
-process will start inside specified python installation.  You can
-unset current version with::
+The process will start inside the specified Python installation.  You can
+unset the current version with::
 
     M-x pyenv-mode-unset
 
 Goodies
 -------
 
-When you set python version with ``pyenv-mode`` following changes
-happens automatically
+When you set the Python version with ``pyenv-mode``, the following changes
+happen automatically:
 
-* compile commands use proper python version and environment
-* flycheck_ perform syntax checking according to python version you use
-* anaconda-mode_ search completions, definitions and references in chosen environment
+* compile commands use proper Python version and environment
+* flycheck_ performs syntax checking according to Python version you use
+* anaconda-mode_ search completions, definitions and references respect the chosen environment
 
 Projectile integration
 ``````````````````````
 
-You can switch python version together with current project.  Drop
-following lines into emacs init file.  When use projectile switch
-project with ``C-c p p`` key binding ``pyenv-mode`` will activate
-environment matched project name.
+You can switch Python versions together with your current project.  Drop
+the following lines into your Emacs init file.  When you use projectile switch
+project with the ``C-c p p`` key binding ``pyenv-mode`` will activate the
+environment matched to the project's name.
 
 .. code:: lisp
 
