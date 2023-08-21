@@ -1,12 +1,18 @@
 .. |melpa| image:: https://melpa.org/packages/pyenv-mode-badge.svg
     :target: https://melpa.org/#/pyenv-mode
     :alt: Melpa
+.. |melpa-stable| image:: https://stable.melpa.org/packages/pyenv-mode-badge.svg
+    :target: https://stable.melpa.org/#/pyenv-mode
+    :alt: Melpa-Stable
+.. |ci| image:: https://github.com/pythonic-emacs/pyenv-mode/actions/workflows/test.yml/badge.svg
+    :target: https://github.com/pythonic-emacs/pyenv-mode/actions/workflows/test.yml
+    :alt: CI
 
 ==========
 Pyenv mode
 ==========
 
-|melpa|
+|melpa| |melpa-stable| |ci|
 
 Pyenv mode integrates Fabián E. Gallina's `python.el`_ with the pyenv_ tool.
 This gives packages which already use python.el (like python-django_)
