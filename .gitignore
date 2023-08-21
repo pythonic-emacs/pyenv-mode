@@ -1,4 +1,6 @@
 .cask/
+.eask/
+dist/
 [#]*[#]
 *.elc
 *~
