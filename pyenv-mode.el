@@ -89,7 +89,6 @@
   "Minor mode for pyenv interaction.
 
 \\{pyenv-mode-map}"
-  :global t
   :lighter ""
   :keymap pyenv-mode-map
   (if pyenv-mode
