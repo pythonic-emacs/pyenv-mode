@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "pyenv-mode"
          "0.1.0"
          "Integrate pyenv with python-mode")
