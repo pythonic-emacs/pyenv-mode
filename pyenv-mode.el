@@ -37,6 +37,7 @@
     (when (pyenv-mode-version)
       (concat "Pyenv:" (pyenv-mode-version) " ")))
   "How `pyenv-mode' will indicate the current python version in the mode line."
+  :type '(string)
   :group 'pyenv)
 
 (defun pyenv-mode-version ()
